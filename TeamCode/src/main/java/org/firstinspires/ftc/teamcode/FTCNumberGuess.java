@@ -43,7 +43,6 @@ public class FTCNumberGuess extends OpMode {
         return guess;
     }
 
-    @Override
     public void loop() {
         int attempts = 7;
         int number = (int)(Math.random() * 100) + 1;
