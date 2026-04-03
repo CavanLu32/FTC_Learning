@@ -20,6 +20,11 @@ public class real_mecanum_auto extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
+        leftBackMotor = hardwareMap.get(DcMotor.class, "leftBack");
+        leftFrontMotor = hardwareMap.get(DcMotor.class, "leftFront");
+        rightBackMotor = hardwareMap.get(DcMotor.class, "rightBack");
+        rightFrontMotor = hardwareMap.get(DcMotor.class, "rightFront");
+
         leftBackMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftFrontMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightBackMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -45,6 +50,7 @@ public class real_mecanum_auto extends LinearOpMode {
             rightFrontMotor.setPower(Math.max(-1, Math.min(1, rfpower)));
 
             telemetry.addData("lfPos", lfCurrentPos);
+            telemetry.addData("rfPos", rfCurrentPos);
             telemetry.addData("Target", targetPosition);
             telemetry.update();
         }
