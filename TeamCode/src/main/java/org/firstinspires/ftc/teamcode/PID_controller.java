@@ -10,7 +10,7 @@ public class PID_controller {
 
     private ElapsedTime timer = new ElapsedTime();
 
-    public PID_controller (double kP, double kI, double kD) {
+    public PID_controller(double kP, double kI, double kD) {
         this.kP = kP;
         this.kI = kI;
         this.kD = kD;

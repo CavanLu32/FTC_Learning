@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp
 public class FTCNumberGuess extends OpMode {
 
-    public void next (String caption, String value) {
+    public void next(String caption, String value) {
         boolean next = false;
         while (!next) {
             telemetry.addData(caption, value + " (Press A to continue)");
@@ -15,7 +15,7 @@ public class FTCNumberGuess extends OpMode {
     }
 
     @Override
-    public void init () {
+    public void init() {
         next("Title", "Guess the Number");
         next("Tutorial", "Pick a number, 1 to 100");
         next("Tutorial", "Press A to add one");
@@ -26,7 +26,7 @@ public class FTCNumberGuess extends OpMode {
         next("Tutorial", "Let's play!");
     }
 
-    public int guess () {
+    public int guess() {
         int guess = 0;
         boolean guessed = false;
         int a = 1, b = 10;
@@ -43,7 +43,7 @@ public class FTCNumberGuess extends OpMode {
         return guess;
     }
 
-    public void loop () {
+    public void loop() {
         int attempts = 7;
         int number = (int)(Math.random() * 100) + 1;
         while (attempts > 0) {

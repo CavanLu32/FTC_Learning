@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public  class FTCPractice extends OpMode {
 
     @Override
-    public void init () {
+    public void init() {
         String button = "N/A";
         boolean pressed = false;
         while (!pressed) {
@@ -20,7 +20,7 @@ public  class FTCPractice extends OpMode {
         telemetry.addData("Pressed", button);
     }
 
-    public void loop () {
+    public void loop() {
 
     }
 }
