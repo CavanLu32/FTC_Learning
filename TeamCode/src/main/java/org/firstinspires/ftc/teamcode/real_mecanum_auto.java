@@ -9,10 +9,6 @@ public class real_mecanum_auto extends LinearOpMode {
 
     private  storage storage;
     private PID_controller PID_controller;
-    private DcMotor leftBackMotor;
-    private DcMotor leftFrontMotor;
-    private DcMotor rightBackMotor;
-    private DcMotor rightFrontMotor;
     private double targetPosition = 500;
 
     PID_controller controller = new PID_controller(0.01, 0, 0.0001);
@@ -20,10 +16,10 @@ public class real_mecanum_auto extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        leftBackMotor = hardwareMap.get(DcMotor.class, "leftBack");
-        leftFrontMotor = hardwareMap.get(DcMotor.class, "leftFront");
-        rightBackMotor = hardwareMap.get(DcMotor.class, "rightBack");
-        rightFrontMotor = hardwareMap.get(DcMotor.class, "rightFront");
+        DcMotor leftBackMotor = hardwareMap.get(DcMotor.class, "leftBack");
+        DcMotor leftFrontMotor = hardwareMap.get(DcMotor.class, "leftFront");
+        DcMotor rightBackMotor = hardwareMap.get(DcMotor.class, "rightBack");
+        DcMotor rightFrontMotor = hardwareMap.get(DcMotor.class, "rightFront");
 
         leftBackMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftFrontMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -44,10 +40,7 @@ public class real_mecanum_auto extends LinearOpMode {
             double rbpower = controller.calculate(targetPosition, rbCurrentPos);
             double rfpower = controller.calculate(targetPosition, rfCurrentPos);
 
-            leftBackMotor.setPower(Math.max(-1, Math.min(1, lbpower)));
-            leftFrontMotor.setPower(Math.max(-1, Math.min(1, lfpower)));
-            rightBackMotor.setPower(Math.max(-1, Math.min(1, rbpower)));
-            rightFrontMotor.setPower(Math.max(-1, Math.min(1, rfpower)));
+            storage.setPower(Math.max(-1, Math.min(1, lbpower)), Math.max(-1, Math.min(1, lfpower)), Math.max(-1, Math.min(1, rbpower)), Math.max(-1, Math.min(1, rfpower)));
 
             telemetry.addData("lfPos", lfCurrentPos);
             telemetry.addData("rfPos", rfCurrentPos);

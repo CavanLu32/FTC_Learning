@@ -10,6 +10,7 @@ public class storage {
     private DcMotor leftFrontMotor;
     private  DcMotor rightBackMotor;
     private DcMotor rightFrontMotor;
+
     public void stopMotors() {
         leftBackMotor.setPower(0);
         leftFrontMotor.setPower(0);
@@ -39,5 +40,11 @@ public class storage {
         rightFrontMotor.setTargetPosition(1000);
         rightFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightFrontMotor.setPower(0.5);
+    }
+    public void setPower( double backLeftPower, double frontLeftPower, double backRightPower, double frontRightPower) {
+        leftBackMotor.setPower(backLeftPower);
+        leftFrontMotor.setPower(frontLeftPower);
+        rightBackMotor.setPower(backRightPower);
+        rightFrontMotor.setPower(frontRightPower);
     }
 }
