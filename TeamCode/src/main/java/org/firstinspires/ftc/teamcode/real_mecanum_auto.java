@@ -7,45 +7,46 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @Autonomous(name = "WAuto")
 public class real_mecanum_auto extends LinearOpMode {
 
-    private storage storage;
-    private PID_controller PID_controller;
-    private double targetPosition = 500;
+  private storage storage;
+  private PID_controller PID_controller;
+  private double targetPosition = 500;
 
-    PID_controller controller = new PID_controller(0.01, 0, 0.0001);
+  PID_controller controller = new PID_controller(0.01, 0, 0.0001);
 
-    @Override
-    public void runOpMode() throws InterruptedException {
+  @Override
+  public void runOpMode() throws InterruptedException {
 
-        DcMotor leftBackMotor = hardwareMap.get(DcMotor.class, "leftBack");
-        DcMotor leftFrontMotor = hardwareMap.get(DcMotor.class, "leftFront");
-        DcMotor rightBackMotor = hardwareMap.get(DcMotor.class, "rightBack");
-        DcMotor rightFrontMotor = hardwareMap.get(DcMotor.class, "rightFront");
+    DcMotor leftBackMotor = hardwareMap.get(DcMotor.class, "leftBack");
+    DcMotor leftFrontMotor = hardwareMap.get(DcMotor.class, "leftFront");
+    DcMotor rightBackMotor = hardwareMap.get(DcMotor.class, "rightBack");
+    DcMotor rightFrontMotor = hardwareMap.get(DcMotor.class, "rightFront");
 
-        leftBackMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leftFrontMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightBackMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightFrontMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    leftBackMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    leftFrontMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    rightBackMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    rightFrontMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        waitForStart();
+    waitForStart();
 
-        while (opModeIsActive()) {
+    while (opModeIsActive()) {
 
-            double lbCurrentPos = leftBackMotor.getCurrentPosition();
-            double lfCurrentPos = leftFrontMotor.getCurrentPosition();
-            double rbCurrentPos = rightBackMotor.getCurrentPosition();
-            double rfCurrentPos = rightFrontMotor.getCurrentPosition();
+      double lbCurrentPos = leftBackMotor.getCurrentPosition();
+      double lfCurrentPos = leftFrontMotor.getCurrentPosition();
+      double rbCurrentPos = rightBackMotor.getCurrentPosition();
+      double rfCurrentPos = rightFrontMotor.getCurrentPosition();
 
-            double lbpower = controller.calculate(targetPosition, lbCurrentPos);
-            double lfpower = controller.calculate(targetPosition, lfCurrentPos);
-            double rbpower = controller.calculate(targetPosition, rbCurrentPos);
-            double rfpower = controller.calculate(targetPosition, rfCurrentPos);
+      double lbpower = controller.calculate(targetPosition, lbCurrentPos);
+      double lfpower = controller.calculate(targetPosition, lfCurrentPos);
+      double rbpower = controller.calculate(targetPosition, rbCurrentPos);
+      double rfpower = controller.calculate(targetPosition, rfCurrentPos);
 
-            storage.setPower(Math.max(-1, Math.min(1, lbpower)), Math.max(-1, Math.min(1, lfpower)), Math.max(-1, Math.min(1, rbpower)), Math.max(-1, Math.min(1, rfpower)));
+      storage.setPower(Math.max(-1, Math.min(1, lbpower)), Math.max(-1, Math.min(1, lfpower)),
+          Math.max(-1, Math.min(1, rbpower)), Math.max(-1, Math.min(1, rfpower)));
 
-            telemetry.addData("lfPos", lfCurrentPos);
-            telemetry.addData("rfPos", rfCurrentPos);
-            telemetry.addData("Target", targetPosition);
-            telemetry.update();
-        }
+      telemetry.addData("lfPos", lfCurrentPos);
+      telemetry.addData("rfPos", rfCurrentPos);
+      telemetry.addData("Target", targetPosition);
+      telemetry.update();
     }
+  }
 }
