@@ -36,8 +36,7 @@ public class FTCNumberGuess extends OpMode {
             else if (gamepad1.x) {
                 a *= -1;
                 b *= -1;
-            }
-            else if (gamepad1.y) guessed = true;
+            } else if (gamepad1.y) guessed = true;
             telemetry.addData("Number", guess);
         }
         return guess;
@@ -45,18 +44,22 @@ public class FTCNumberGuess extends OpMode {
 
     public void loop() {
         int attempts = 7;
-        int number = (int)(Math.random() * 100) + 1;
+        int number = (int) (Math.random() * 100) + 1;
         while (attempts > 0) {
-            if (guess() < number) { telemetry.addData("Value", "Too low."); }
-            else if (guess() > number) { telemetry.addData("Value", "Too high."); }
-            else {
+            if (guess() < number) {
+                telemetry.addData("Value", "Too low.");
+            } else if (guess() > number) {
+                telemetry.addData("Value", "Too high.");
+            } else {
                 int tries = 8 - attempts;
                 telemetry.addData("Congrats", "You used " + tries + " attempts!");
                 break;
             }
-            attempts --;
+            attempts--;
 
         }
-        if (attempts <= 0) { telemetry.addData("Try again", "You ran out of attempts."); }
+        if (attempts <= 0) {
+            telemetry.addData("Try again", "You ran out of attempts.");
+        }
     }
 }

@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @Autonomous(name = "WAuto")
 public class real_mecanum_auto extends LinearOpMode {
 
-    private  storage storage;
+    private storage storage;
     private PID_controller PID_controller;
     private double targetPosition = 500;
 
@@ -28,7 +28,7 @@ public class real_mecanum_auto extends LinearOpMode {
 
         waitForStart();
 
-        while (opModeIsActive()){
+        while (opModeIsActive()) {
 
             double lbCurrentPos = leftBackMotor.getCurrentPosition();
             double lfCurrentPos = leftFrontMotor.getCurrentPosition();

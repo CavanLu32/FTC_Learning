@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name = "WTeleOp")
-public class real_teleOp_tank_drive extends LinearOpMode{
+public class real_teleOp_tank_drive extends LinearOpMode {
     private storage storage;
 
     private DcMotor leftBackMotor;
@@ -26,25 +26,21 @@ public class real_teleOp_tank_drive extends LinearOpMode{
         waitForStart();
         if (isStopRequested()) return;
 
-        while (opModeIsActive()){
+        while (opModeIsActive()) {
 
-            if (gamepad1.left_stick_y < -0.05){
+            if (gamepad1.left_stick_y < -0.05) {
 
                 leftBackMotor.setPower(storage.leftBackMotorSpeed);
                 leftFrontMotor.setPower(storage.leftFrontMotorSpeed);
                 rightBackMotor.setPower(storage.rightBackMotorSpeed);
                 rightFrontMotor.setPower(storage.rightFrontMotorSpeed);
-            }
-
-            else if (gamepad1.left_stick_y > 0.05){
+            } else if (gamepad1.left_stick_y > 0.05) {
 
                 leftBackMotor.setPower(storage.leftBackMotorSpeed * -1.0);
                 leftFrontMotor.setPower(storage.leftFrontMotorSpeed * -1.0);
                 rightBackMotor.setPower(storage.rightBackMotorSpeed * -1.0);
                 rightFrontMotor.setPower(storage.rightFrontMotorSpeed * -1.0);
-            }
-
-            else {
+            } else {
                 leftBackMotor.setPower(0);
                 leftFrontMotor.setPower(0);
                 rightBackMotor.setPower(0);

@@ -10,9 +10,7 @@ public class teleop_homework extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        storage storage;
-
-        storage = new storage();
+        storage storage = new storage();
 
         double drive, turn, strafe;
         double backLeftPower, frontLeftPower, backRightPower, frontRightPower;
@@ -32,7 +30,7 @@ public class teleop_homework extends LinearOpMode {
 
         waitForStart();
 
-        while(opModeIsActive()) {
+        while (opModeIsActive()) {
             drive = gamepad1.left_stick_y * -1;
             turn = gamepad1.right_stick_x;
             strafe = gamepad1.left_stick_x;

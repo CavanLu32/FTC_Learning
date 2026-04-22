@@ -19,10 +19,12 @@ public class PID_controller {
     public double calculate(double target, double current) {
 
         double error = target - current;
-        double derivative = (error -lastError) / timer.seconds();
+        double derivative = (error - lastError) / timer.seconds();
         integralSum += (error * timer.seconds());
 
-        if (Math.abs(error) < 1) { integralSum = 0; }
+        if (Math.abs(error) < 1) {
+            integralSum = 0;
+        }
 
         double output = (kP * error) + (kI * integralSum) + (kD * derivative);
 
