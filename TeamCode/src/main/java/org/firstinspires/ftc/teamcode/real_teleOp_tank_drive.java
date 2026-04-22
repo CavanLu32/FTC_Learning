@@ -24,9 +24,9 @@ public class real_teleOp_tank_drive extends LinearOpMode {
     rightFrontMotor = hardwareMap.dcMotor.get("rightFrontMotor");
 
     waitForStart();
-      if (isStopRequested()) {
-          return;
-      }
+    if (isStopRequested()) {
+      return;
+    }
 
     while (opModeIsActive()) {
 

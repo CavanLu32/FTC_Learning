@@ -7,11 +7,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @Autonomous(name = "WAuto")
 public class real_mecanum_auto extends LinearOpMode {
 
+  PID_controller controller = new PID_controller(0.01, 0, 0.0001);
   private storage storage;
   private PID_controller PID_controller;
   private double targetPosition = 500;
-
-  PID_controller controller = new PID_controller(0.01, 0, 0.0001);
 
   @Override
   public void runOpMode() throws InterruptedException {
