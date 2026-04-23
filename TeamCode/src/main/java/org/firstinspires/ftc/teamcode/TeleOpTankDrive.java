@@ -6,11 +6,11 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name = "WTeleOp")
 public class TeleOpTankDrive extends LinearOpMode {
-  storage storage;
+  Storage Storage;
 
   @Override
   public void runOpMode() throws InterruptedException {
-    storage = new storage(
+    Storage = new Storage(
         hardwareMap.get(DcMotor.class, "leftBack"),
         hardwareMap.get(DcMotor.class, "leftFront"),
         hardwareMap.get(DcMotor.class, "rightBack"),
@@ -23,10 +23,10 @@ public class TeleOpTankDrive extends LinearOpMode {
     }
 
     while (opModeIsActive()) {
-      double power = Math.abs(gamepad1.left_stick_y) > storage.DEADZONE ?
-          -gamepad1.left_stick_y * storage.MOTOR_SPEED : 0;
+      double power = Math.abs(gamepad1.left_stick_y) > Storage.DEADZONE ?
+          -gamepad1.left_stick_y * Storage.MOTOR_SPEED : 0;
 
-      storage.setAllPower(power);
+      Storage.setAllPower(power);
     }
   }
 }

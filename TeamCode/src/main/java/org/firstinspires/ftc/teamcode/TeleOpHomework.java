@@ -14,7 +14,7 @@ public class TeleOpHomework extends LinearOpMode {
       DcMotorSimple.Direction.FORWARD
   };
 
-  storage storage;
+  Storage Storage;
 
   @Override
   public void runOpMode() throws InterruptedException {
@@ -30,7 +30,7 @@ public class TeleOpHomework extends LinearOpMode {
       motors[i].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    storage = new storage(motors[0], motors[1], motors[2], motors[3]);
+    Storage = new Storage(motors[0], motors[1], motors[2], motors[3]);
 
     waitForStart();
 
@@ -46,9 +46,9 @@ public class TeleOpHomework extends LinearOpMode {
           drive - turn + strafe
       };
 
-      storage.setPower(powers[0], powers[1], powers[2], powers[3]);
+      Storage.setPower(powers[0], powers[1], powers[2], powers[3]);
     }
 
-    storage.stopMotors();
+    Storage.stopMotors();
   }
 }

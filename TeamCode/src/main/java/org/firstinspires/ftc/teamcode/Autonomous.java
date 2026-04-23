@@ -5,11 +5,11 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class Autonomous extends LinearOpMode {
   private static final int RUN_TIME = 5000;
-  storage storage;
+  Storage Storage;
 
   @Override
   public void runOpMode() throws InterruptedException {
-    storage = new storage(
+    Storage = new Storage(
         hardwareMap.get(DcMotor.class, "leftBack"),
         hardwareMap.get(DcMotor.class, "leftFront"),
         hardwareMap.get(DcMotor.class, "rightBack"),
@@ -22,7 +22,7 @@ public class Autonomous extends LinearOpMode {
     }
 
     while (opModeIsActive() && !isStopRequested()) {
-      storage.runAllToTarget();
+      Storage.runAllToTarget();
 
       try {
         Thread.sleep(RUN_TIME);
@@ -31,7 +31,7 @@ public class Autonomous extends LinearOpMode {
         return;
       }
 
-      storage.stopMotors();
+      Storage.stopMotors();
     }
   }
 }
