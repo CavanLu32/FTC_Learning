@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp(name = "My_Teleop")
-public class teleop_homework extends LinearOpMode {
+public class TeleOpHomework extends LinearOpMode {
   private static final DcMotorSimple.Direction[] MOTOR_DIRECTIONS = {
       DcMotorSimple.Direction.FORWARD,
       DcMotorSimple.Direction.REVERSE,

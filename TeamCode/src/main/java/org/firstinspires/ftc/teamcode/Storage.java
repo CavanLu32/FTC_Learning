@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 /**
  * Utility class for managing robot motor operations and speeds.
  */
-public class storage {
+public class Storage {
   public static final double MOTOR_SPEED = 0.5;
   public static final int TARGET_POSITION = 1000;
   public static final double DEADZONE = 0.05;
@@ -23,19 +23,12 @@ public class storage {
    * @param rightBackMotor  The right back motor
    * @param rightFrontMotor The right front motor
    */
-  public storage(DcMotor leftBackMotor, DcMotor leftFrontMotor, DcMotor rightBackMotor,
+  public Storage(DcMotor leftBackMotor, DcMotor leftFrontMotor, DcMotor rightBackMotor,
                  DcMotor rightFrontMotor) {
     this.leftBackMotor = leftBackMotor;
     this.leftFrontMotor = leftFrontMotor;
     this.rightBackMotor = rightBackMotor;
     this.rightFrontMotor = rightFrontMotor;
-  }
-
-  /**
-   * Default constructor for backward compatibility.
-   * Note: Motors must be set manually before use.
-   */
-  public storage() {
   }
 
   /**

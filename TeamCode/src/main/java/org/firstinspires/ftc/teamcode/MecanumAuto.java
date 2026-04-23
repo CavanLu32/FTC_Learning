@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Autonomous(name = "WAuto")
-public class real_mecanum_auto extends LinearOpMode {
+public class MecanumAuto extends LinearOpMode {
   private static final double KP = 0.01;
   private static final double KI = 0;
   private static final double KD = 0.0001;

@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * PID controller implementation for motor control.
  * Provides proportional, integral, and derivative control to reach target positions.
  */
-public class PID_controller {
+public class PIDController {
   private final double kP;
   private final  double kI;
   private final double kD;
@@ -23,7 +23,7 @@ public class PID_controller {
    * @param kI Integral gain
    * @param kD Derivative gain
    */
-  public PID_controller(double kP, double kI, double kD) {
+  public PIDController(double kP, double kI, double kD) {
     this.kP = kP;
     this.kI = kI;
     this.kD = kD;

@@ -1,10 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-public class real_autonomous extends LinearOpMode {
-  private static final int RUN_TIME = 5000;
+@TeleOp(name = "WTeleOp")
+public class TeleOpTankDrive extends LinearOpMode {
   storage storage;
 
   @Override
@@ -21,17 +22,11 @@ public class real_autonomous extends LinearOpMode {
       return;
     }
 
-    while (opModeIsActive() && !isStopRequested()) {
-      storage.runAllToTarget();
+    while (opModeIsActive()) {
+      double power = Math.abs(gamepad1.left_stick_y) > storage.DEADZONE ?
+          -gamepad1.left_stick_y * storage.MOTOR_SPEED : 0;
 
-      try {
-        Thread.sleep(RUN_TIME);
-      } catch (InterruptedException e) {
-        Thread.currentThread().interrupt();
-        return;
-      }
-
-      storage.stopMotors();
+      storage.setAllPower(power);
     }
   }
 }
