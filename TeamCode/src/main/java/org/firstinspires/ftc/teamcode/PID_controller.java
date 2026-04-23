@@ -2,6 +2,10 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+/**
+ * PID controller implementation for motor control.
+ * Provides proportional, integral, and derivative control to reach target positions.
+ */
 public class PID_controller {
   private double kP, kI, kD;
 
@@ -10,12 +14,26 @@ public class PID_controller {
 
   private ElapsedTime timer = new ElapsedTime();
 
+  /**
+   * Creates a new PID controller with specified gains.
+   *
+   * @param kP Proportional gain
+   * @param kI Integral gain
+   * @param kD Derivative gain
+   */
   public PID_controller(double kP, double kI, double kD) {
     this.kP = kP;
     this.kI = kI;
     this.kD = kD;
   }
 
+  /**
+   * Calculates the PID output to reach the target position.
+   *
+   * @param target  The target position
+   * @param current The current position
+   * @return The calculated output power
+   */
   public double calculate(double target, double current) {
 
     double error = target - current;

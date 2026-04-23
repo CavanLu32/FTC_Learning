@@ -6,22 +6,16 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name = "WTeleOp")
 public class real_teleOp_tank_drive extends LinearOpMode {
-  private storage storage;
-
-  private DcMotor leftBackMotor;
-  private DcMotor leftFrontMotor;
-  private DcMotor rightBackMotor;
-  private DcMotor rightFrontMotor;
+  storage storage;
 
   @Override
   public void runOpMode() throws InterruptedException {
-
-    storage = new storage();
-
-    leftBackMotor = hardwareMap.dcMotor.get("leftBackMotor");
-    leftFrontMotor = hardwareMap.dcMotor.get("leftFrontMotor");
-    rightBackMotor = hardwareMap.dcMotor.get("rightBackMotor");
-    rightFrontMotor = hardwareMap.dcMotor.get("rightFrontMotor");
+    storage = new storage(
+        hardwareMap.get(DcMotor.class, "leftBack"),
+        hardwareMap.get(DcMotor.class, "leftFront"),
+        hardwareMap.get(DcMotor.class, "rightBack"),
+        hardwareMap.get(DcMotor.class, "rightFront")
+    );
 
     waitForStart();
     if (isStopRequested()) {
@@ -29,25 +23,10 @@ public class real_teleOp_tank_drive extends LinearOpMode {
     }
 
     while (opModeIsActive()) {
+      double power = Math.abs(gamepad1.left_stick_y) > storage.DEADZONE ?
+          -gamepad1.left_stick_y * storage.MOTOR_SPEED : 0;
 
-      if (gamepad1.left_stick_y < -0.05) {
-
-        leftBackMotor.setPower(storage.leftBackMotorSpeed);
-        leftFrontMotor.setPower(storage.leftFrontMotorSpeed);
-        rightBackMotor.setPower(storage.rightBackMotorSpeed);
-        rightFrontMotor.setPower(storage.rightFrontMotorSpeed);
-      } else if (gamepad1.left_stick_y > 0.05) {
-
-        leftBackMotor.setPower(storage.leftBackMotorSpeed * -1.0);
-        leftFrontMotor.setPower(storage.leftFrontMotorSpeed * -1.0);
-        rightBackMotor.setPower(storage.rightBackMotorSpeed * -1.0);
-        rightFrontMotor.setPower(storage.rightFrontMotorSpeed * -1.0);
-      } else {
-        leftBackMotor.setPower(0);
-        leftFrontMotor.setPower(0);
-        rightBackMotor.setPower(0);
-        rightFrontMotor.setPower(0);
-      }
+      storage.setAllPower(power);
     }
   }
 }

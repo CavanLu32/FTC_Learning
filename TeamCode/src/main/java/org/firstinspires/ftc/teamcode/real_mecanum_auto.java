@@ -6,45 +6,38 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @Autonomous(name = "WAuto")
 public class real_mecanum_auto extends LinearOpMode {
+  private static final double KP = 0.01, KI = 0, KD = 0.0001;
+  private static final double TARGET_POS = 500;
 
-  PID_controller controller = new PID_controller(0.01, 0, 0.0001);
-  private storage storage;
-  private PID_controller PID_controller;
-  private double targetPosition = 500;
+  private final PID_controller controller = new PID_controller(KP, KI, KD);
+  storage storage;
 
   @Override
   public void runOpMode() throws InterruptedException {
+    storage = new storage(
+        hardwareMap.get(DcMotor.class, "leftBack"),
+        hardwareMap.get(DcMotor.class, "leftFront"),
+        hardwareMap.get(DcMotor.class, "rightBack"),
+        hardwareMap.get(DcMotor.class, "rightFront")
+    );
 
-    DcMotor leftBackMotor = hardwareMap.get(DcMotor.class, "leftBack");
-    DcMotor leftFrontMotor = hardwareMap.get(DcMotor.class, "leftFront");
-    DcMotor rightBackMotor = hardwareMap.get(DcMotor.class, "rightBack");
-    DcMotor rightFrontMotor = hardwareMap.get(DcMotor.class, "rightFront");
-
-    leftBackMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    leftFrontMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    rightBackMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    rightFrontMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    storage.setAllMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
     waitForStart();
 
     while (opModeIsActive()) {
+      double[] positions = storage.getCurrentPositions();
 
-      double lbCurrentPos = leftBackMotor.getCurrentPosition();
-      double lfCurrentPos = leftFrontMotor.getCurrentPosition();
-      double rbCurrentPos = rightBackMotor.getCurrentPosition();
-      double rfCurrentPos = rightFrontMotor.getCurrentPosition();
+      double[] powers = new double[4];
+      for (int i = 0; i < 4; i++) {
+        powers[i] = Math.max(-1, Math.min(1, controller.calculate(TARGET_POS, positions[i])));
+      }
 
-      double lbpower = controller.calculate(targetPosition, lbCurrentPos);
-      double lfpower = controller.calculate(targetPosition, lfCurrentPos);
-      double rbpower = controller.calculate(targetPosition, rbCurrentPos);
-      double rfpower = controller.calculate(targetPosition, rfCurrentPos);
+      storage.setPower(powers[0], powers[1], powers[2], powers[3]);
 
-      storage.setPower(Math.max(-1, Math.min(1, lbpower)), Math.max(-1, Math.min(1, lfpower)),
-          Math.max(-1, Math.min(1, rbpower)), Math.max(-1, Math.min(1, rfpower)));
-
-      telemetry.addData("lfPos", lfCurrentPos);
-      telemetry.addData("rfPos", rfCurrentPos);
-      telemetry.addData("Target", targetPosition);
+      telemetry.addData("lfPos", positions[1]);
+      telemetry.addData("rfPos", positions[3]);
+      telemetry.addData("Target", TARGET_POS);
       telemetry.update();
     }
   }

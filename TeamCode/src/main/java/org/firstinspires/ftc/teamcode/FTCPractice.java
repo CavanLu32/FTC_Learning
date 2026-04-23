@@ -3,9 +3,15 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+/**
+ * Basic FTC practice OpMode for testing gamepad input.
+ */
 @TeleOp
 public class FTCPractice extends OpMode {
 
+  /**
+   * Initializes the OpMode and waits for a button press.
+   */
   @Override
   public void init() {
     String button = "N/A";
@@ -25,7 +31,9 @@ public class FTCPractice extends OpMode {
     telemetry.addData("Pressed", button);
   }
 
-  @SuppressWarnings("checkstyle:MissingJavadocMethod")
+  /**
+   * Main loop method - currently empty.
+   */
   public void loop() {
 
   }

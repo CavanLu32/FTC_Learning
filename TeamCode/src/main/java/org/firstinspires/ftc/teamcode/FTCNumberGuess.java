@@ -5,67 +5,86 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp
 public class FTCNumberGuess extends OpMode {
+  private static final String[] TUTORIAL = {
+      "Guess the Number",
+      "Pick a number, 1 to 100",
+      "Press A to add one",
+      "Press B to add ten",
+      "Press X make A and B subtract, instead of adding.",
+      "Press Y to guess",
+      "You have 7 attempts",
+      "Let's play!"
+  };
 
-  public void next(String caption, String value) {
-    boolean next = false;
-    while (!next) {
-      telemetry.addData(caption, value + " (Press A to continue)");
-      if (gamepad1.a) {
-        next = true;
-      }
-    }
-  }
+  private int targetNumber;
+  private int attempts;
+  private boolean gameActive;
+  private int guess = 0;
+  private int multiplier = 1;
 
   @Override
   public void init() {
-    next("Title", "Guess the Number");
-    next("Tutorial", "Pick a number, 1 to 100");
-    next("Tutorial", "Press A to add one");
-    next("Tutorial", "Press B to add ten");
-    next("Tutorial", "Press X make A and B subtract, instead of adding.");
-    next("Tutorial", "Press Y to guess");
-    next("Tutorial", "You have 7 attempts");
-    next("Tutorial", "Let's play!");
-  }
-
-  public int guess() {
-    int guess = 0;
-    boolean guessed = false;
-    int a = 1, b = 10;
-    while (!guessed) {
-      if (gamepad1.a) {
-        guess += a;
-      } else if (gamepad1.b) {
-        guess += b;
-      } else if (gamepad1.x) {
-        a *= -1;
-        b *= -1;
-      } else if (gamepad1.y) {
-        guessed = true;
-      }
-      telemetry.addData("Number", guess);
+    for (String message : TUTORIAL) {
+      waitForButton("Tutorial", message);
     }
-    return guess;
+    resetGame();
   }
 
+  private void waitForButton(String caption, String value) {
+    while (!gamepad1.a) {
+      telemetry.addData(caption, value + " (Press A to continue)");
+      telemetry.update();
+    }
+  }
+
+  private void resetGame() {
+    targetNumber = (int) (Math.random() * 100) + 1;
+    attempts = 7;
+    gameActive = true;
+    guess = 0;
+    multiplier = 1;
+  }
+
+  @Override
   public void loop() {
-    int attempts = 7;
-    int number = (int) (Math.random() * 100) + 1;
-    while (attempts > 0) {
-      if (guess() < number) {
-        telemetry.addData("Value", "Too low.");
-      } else if (guess() > number) {
-        telemetry.addData("Value", "Too high.");
-      } else {
-        int tries = 8 - attempts;
-        telemetry.addData("Congrats", "You used " + tries + " attempts!");
-        break;
+    if (!gameActive) {
+      if (gamepad1.a) {
+        resetGame();
       }
-      attempts--;
+      return;
+    }
 
+    getGuess();
+
+    if (gamepad1.y) {
+      attempts--;
+      if (guess == targetNumber) {
+        telemetry.addData("Congrats", "You used " + (8 - attempts) + " attempts!");
+        gameActive = false;
+      } else if (attempts == 0) {
+        telemetry.addData("Try again", "You ran out of attempts. Number was: " + targetNumber);
+        gameActive = false;
+      } else {
+        telemetry.addData("Value", guess < targetNumber ? "Too low." : "Too high.");
+        telemetry.addData("Attempts left", attempts);
+      }
     }
-    if (attempts <= 0) {
-      telemetry.addData("Try again", "You ran out of attempts.");
+
+    telemetry.addData("Current Guess", guess);
+    telemetry.update();
+  }
+
+  private int getGuess() {
+    if (gamepad1.a) {
+      guess += multiplier;
     }
+    if (gamepad1.b) {
+      guess += 10 * multiplier;
+    }
+    if (gamepad1.x) {
+      multiplier *= -1;
+    }
+
+    return Math.max(0, Math.min(100, guess));
   }
 }

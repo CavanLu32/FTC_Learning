@@ -1,13 +1,20 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class real_autonomous extends LinearOpMode {
-  private storage storage;
+  private static final int RUN_TIME = 5000;
+  storage storage;
 
   @Override
   public void runOpMode() throws InterruptedException {
-    storage = new storage();
+    storage = new storage(
+        hardwareMap.get(DcMotor.class, "leftBack"),
+        hardwareMap.get(DcMotor.class, "leftFront"),
+        hardwareMap.get(DcMotor.class, "rightBack"),
+        hardwareMap.get(DcMotor.class, "rightFront")
+    );
 
     waitForStart();
     if (isStopRequested()) {
@@ -15,13 +22,14 @@ public class real_autonomous extends LinearOpMode {
     }
 
     while (opModeIsActive() && !isStopRequested()) {
+      storage.runAllToTarget();
 
-      storage.runWithEncoderLeftB();
-      storage.runWithEncoderLeftF();
-      storage.runWithEncoderRightB();
-      storage.runWithEncoderRightF();
-
-      wait(5000);
+      try {
+        Thread.sleep(RUN_TIME);
+      } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+        return;
+      }
 
       storage.stopMotors();
     }

@@ -7,43 +7,48 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp(name = "My_Teleop")
 public class teleop_homework extends LinearOpMode {
+  private static final DcMotorSimple.Direction[] MOTOR_DIRECTIONS = {
+      DcMotorSimple.Direction.FORWARD,
+      DcMotorSimple.Direction.REVERSE,
+      DcMotorSimple.Direction.REVERSE,
+      DcMotorSimple.Direction.FORWARD
+  };
+
+  storage storage;
+
   @Override
   public void runOpMode() throws InterruptedException {
+    DcMotor[] motors = new DcMotor[] {
+        hardwareMap.get(DcMotor.class, "leftBack"),
+        hardwareMap.get(DcMotor.class, "leftFront"),
+        hardwareMap.get(DcMotor.class, "rightBack"),
+        hardwareMap.get(DcMotor.class, "rightFront")
+    };
 
-    storage storage = new storage();
+    for (int i = 0; i < motors.length; i++) {
+      motors[i].setDirection(MOTOR_DIRECTIONS[i]);
+      motors[i].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
 
-    double drive, turn, strafe;
-    double backLeftPower, frontLeftPower, backRightPower, frontRightPower;
-
-    DcMotor leftBackMotor = hardwareMap.get(DcMotor.class, "leftBack");
-    DcMotor leftFrontMotor = hardwareMap.get(DcMotor.class, "leftFront");
-    DcMotor rightBackMotor = hardwareMap.get(DcMotor.class, "rightBack");
-    DcMotor rightFrontMotor = hardwareMap.get(DcMotor.class, "rightFront");
-
-    leftFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-    rightBackMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-
-    leftBackMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    leftFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    rightBackMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    rightFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    storage = new storage(motors[0], motors[1], motors[2], motors[3]);
 
     waitForStart();
 
     while (opModeIsActive()) {
-      drive = gamepad1.left_stick_y * -1;
-      turn = gamepad1.right_stick_x;
-      strafe = gamepad1.left_stick_x;
+      double drive = -gamepad1.left_stick_y;
+      double turn = gamepad1.right_stick_x;
+      double strafe = gamepad1.left_stick_x;
 
-      backLeftPower = drive + turn - strafe;
-      frontLeftPower = drive + turn + strafe;
-      backRightPower = drive - turn - strafe;
-      frontRightPower = drive - turn + strafe;
+      double[] powers = {
+          drive + turn - strafe,
+          drive + turn + strafe,
+          drive - turn - strafe,
+          drive - turn + strafe
+      };
 
-      storage.setPower(backLeftPower, frontLeftPower, backRightPower, frontRightPower);
+      storage.setPower(powers[0], powers[1], powers[2], powers[3]);
     }
 
     storage.stopMotors();
   }
-
 }
