@@ -34,7 +34,7 @@ public class FTCPractice extends OpMode {
   /**
    * Main loop method - currently empty.
    */
-  public void loop() {
-
+  public void loop() throws UnsupportedOperationException{
+    // Not needed for coding use
   }
 }
