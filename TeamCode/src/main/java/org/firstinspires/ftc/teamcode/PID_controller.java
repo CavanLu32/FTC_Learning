@@ -7,12 +7,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Provides proportional, integral, and derivative control to reach target positions.
  */
 public class PID_controller {
-  private double kP, kI, kD;
+  private final double kP;
+  private final  double kI;
+  private final double kD;
 
   private double integralSum = 0;
   private double lastError = 0;
 
-  private ElapsedTime timer = new ElapsedTime();
+  private final ElapsedTime timer = new ElapsedTime();
 
   /**
    * Creates a new PID controller with specified gains.
