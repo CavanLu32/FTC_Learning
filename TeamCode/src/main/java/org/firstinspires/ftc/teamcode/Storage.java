@@ -85,10 +85,10 @@ public class Storage {
   /**
    * Sets power for all four motors.
    *
-   * @param backLeftPower   Power for the back left motor
-   * @param frontLeftPower  Power for the front left motor
-   * @param backRightPower  Power for the back right motor
-   * @param frontRightPower Power for the front right motor
+   * @param backLeft   Power for the back left motor
+   * @param frontLeft  Power for the front left motor
+   * @param backRight  Power for the back right motor
+   * @param frontRight Power for the front right motor
    */
   public void setPower(double backLeft, double frontLeft, double backRight, double frontRight) {
     leftBackMotor.setPower(backLeft);
