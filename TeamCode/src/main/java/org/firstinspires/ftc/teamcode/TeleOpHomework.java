@@ -7,30 +7,26 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp(name = "My_Teleop")
 public class TeleOpHomework extends LinearOpMode {
-  private static final DcMotorSimple.Direction[] MOTOR_DIRECTIONS = {
-      DcMotorSimple.Direction.FORWARD,
-      DcMotorSimple.Direction.REVERSE,
-      DcMotorSimple.Direction.REVERSE,
-      DcMotorSimple.Direction.FORWARD
-  };
-
   Storage Storage;
 
   @Override
   public void runOpMode() throws InterruptedException {
-    DcMotor[] motors = new DcMotor[] {
-        hardwareMap.get(DcMotor.class, "leftBack"),
-        hardwareMap.get(DcMotor.class, "leftFront"),
-        hardwareMap.get(DcMotor.class, "rightBack"),
-        hardwareMap.get(DcMotor.class, "rightFront")
-    };
+    DcMotor leftBack = hardwareMap.get(DcMotor.class, "leftBack");
+    DcMotor leftFront = hardwareMap.get(DcMotor.class, "leftFront");
+    DcMotor rightBack = hardwareMap.get(DcMotor.class, "rightBack");
+    DcMotor rightFront = hardwareMap.get(DcMotor.class, "rightFront");
 
-    for (int i = 0; i < motors.length; i++) {
-      motors[i].setDirection(MOTOR_DIRECTIONS[i]);
-      motors[i].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
+    leftBack.setDirection(DcMotorSimple.Direction.FORWARD);
+    leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+    rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
+    rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
 
-    Storage = new Storage(motors[0], motors[1], motors[2], motors[3]);
+    leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+    Storage = new Storage(leftBack, leftFront, rightBack, rightFront);
 
     waitForStart();
 
@@ -39,14 +35,12 @@ public class TeleOpHomework extends LinearOpMode {
       double turn = gamepad1.right_stick_x;
       double strafe = gamepad1.left_stick_x;
 
-      double[] powers = {
-          drive + turn - strafe,
-          drive + turn + strafe,
-          drive - turn - strafe,
-          drive - turn + strafe
-      };
+      double leftBackPower = drive + turn - strafe;
+      double leftFrontPower = drive + turn + strafe;
+      double rightBackPower = drive - turn - strafe;
+      double rightFrontPower = drive - turn + strafe;
 
-      Storage.setPower(powers[0], powers[1], powers[2], powers[3]);
+      Storage.setPower(leftBackPower, leftFrontPower, rightBackPower, rightFrontPower);
     }
 
     Storage.stopMotors();
