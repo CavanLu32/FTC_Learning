@@ -90,12 +90,11 @@ public class Storage {
    * @param backRightPower  Power for the back right motor
    * @param frontRightPower Power for the front right motor
    */
-  public void setPower(double backLeftPower, double frontLeftPower, double backRightPower,
-                       double frontRightPower) {
-    leftBackMotor.setPower(backLeftPower);
-    leftFrontMotor.setPower(frontLeftPower);
-    rightBackMotor.setPower(backRightPower);
-    rightFrontMotor.setPower(frontRightPower);
+  public void setPower(double backLeft, double frontLeft, double backRight, double frontRight) {
+    leftBackMotor.setPower(backLeft);
+    leftFrontMotor.setPower(frontLeft);
+    rightBackMotor.setPower(backRight);
+    rightFrontMotor.setPower(frontRight);
   }
 
   /**

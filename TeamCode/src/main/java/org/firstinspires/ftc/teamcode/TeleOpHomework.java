@@ -35,12 +35,7 @@ public class TeleOpHomework extends LinearOpMode {
       double turn = gamepad1.right_stick_x;
       double strafe = gamepad1.left_stick_x;
 
-      double leftBackPower = drive + turn - strafe;
-      double leftFrontPower = drive + turn + strafe;
-      double rightBackPower = drive - turn - strafe;
-      double rightFrontPower = drive - turn + strafe;
-
-      Storage.setPower(leftBackPower, leftFrontPower, rightBackPower, rightFrontPower);
+      Storage.setPower(drive + turn - strafe, drive + turn - strafe, drive - turn - strafe, drive - turn + strafe);
     }
 
     Storage.stopMotors();
