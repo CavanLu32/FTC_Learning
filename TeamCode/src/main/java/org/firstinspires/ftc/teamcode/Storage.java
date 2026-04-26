@@ -23,8 +23,7 @@ public class Storage {
    * @param rightBackMotor  The right back motor
    * @param rightFrontMotor The right front motor
    */
-  public Storage(DcMotor leftBackMotor, DcMotor leftFrontMotor, DcMotor rightBackMotor,
-                 DcMotor rightFrontMotor) {
+  public Storage(DcMotor leftBackMotor, DcMotor leftFrontMotor, DcMotor rightBackMotor, DcMotor rightFrontMotor) {
     this.leftBackMotor = leftBackMotor;
     this.leftFrontMotor = leftFrontMotor;
     this.rightBackMotor = rightBackMotor;
@@ -85,16 +84,16 @@ public class Storage {
   /**
    * Sets power for all four motors.
    *
-   * @param backLeft   Power for the back left motor
-   * @param frontLeft  Power for the front left motor
-   * @param backRight  Power for the back right motor
-   * @param frontRight Power for the front right motor
+   * @param backLeftPower   Power for the back left motor
+   * @param frontLeftPower  Power for the front left motor
+   * @param backRightPower  Power for the back right motor
+   * @param frontRightPower Power for the front right motor
    */
-  public void setPower(double backLeft, double frontLeft, double backRight, double frontRight) {
-    leftBackMotor.setPower(backLeft);
-    leftFrontMotor.setPower(frontLeft);
-    rightBackMotor.setPower(backRight);
-    rightFrontMotor.setPower(frontRight);
+  public void setPower(double backLeftPower, double frontLeftPower, double backRightPower, double frontRightPower) {
+    leftBackMotor.setPower(backLeftPower);
+    leftFrontMotor.setPower(frontLeftPower);
+    rightBackMotor.setPower(backRightPower);
+    rightFrontMotor.setPower(frontRightPower);
   }
 
   /**
